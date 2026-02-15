@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carlos Zavala Trading | Opciones Binarias</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        .hero-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: url('https://i.imgur.com/oUdYFvf.jpg') center/cover no-repeat;
+            z-index: -2;
+        }
+
+        .hero-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: linear-gradient(135deg, rgba(15,12,41,0.92) 0%, rgba(48,43,99,0.85) 50%, rgba(36,36,62,0.92) 100%);
+            z-index: -1;
+        }
+
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        .bg-animation span {
+            position: absolute;
+            display: block;
+            width: 20px;
+            height: 20px;
+            background: #00d4ff;
+            animation: move 25s linear infinite;
+            bottom: -150px;
+            border-radius: 50%;
+        }
+
+        @keyframes move {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-1000px) rotate(720deg); opacity: 0; }
+        }
+
+        header {
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgba(0,0,0,0.3);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 1.5em;
+            font-weight: bold;
+            background: linear-gradient(45deg, #00d4ff, #7b2cbf);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero {
+            margin-top: 60px;
+            padding: 80px 20px;
+            text-align: center;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #fff, #00d4ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: glow 2s ease-in-out infinite alternate;
+            text-shadow: 0 0 30px rgba(0,212,255,0.5);
+            line-height: 1.2;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 10px #00d4ff; }
+            to { text-shadow: 0 0 30px #00d4ff, 0 0 40px #7b2cbf; }
+        }
+
+        .hero p {
+            font-size: 1.2em;
+            color: #e0e0e0;
+            max-width: 800px;
+            margin: 0 auto 40px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+            line-height: 1.6;
+        }
+
+        .btn-whatsapp-main {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 18px 40px;
+            background: linear-gradient(45deg, #25d366, #128c7e);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 1.2em;
+            font-weight: bold;
+            box-shadow: 0 10px 30px rgba(37, 211, 102, 0.4);
+            transition: all 0.3s ease;
+            margin-bottom: 15px;
+        }
+
+        .btn-whatsapp-main:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(37, 211, 102, 0.5);
+        }
+
+        .hero-subtext {
+            color: #888;
+            font-size: 0.95em;
+            margin-top: 10px;
+        }
+
+        .presentation-section {
+            padding: 60px 20px;
+            background: rgba(0,0,0,0.95);
+            text-align: center;
+            position: relative;
+        }
+
+        .presentation-container {
+            max-width: 500px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, rgba(0,212,255,0.1), rgba(123,44,191,0.1));
+            border-radius: 30px;
+            padding: 30px 20px;
+            border: 1px solid rgba(0,212,255,0.3);
+        }
+
+        .presentation-section h2 {
+            font-size: 2em;
+            margin-bottom: 20px;
+            color: #00d4ff;
+        }
+
+        .shorts-container {
+            max-width: 350px;
+            margin: 0 auto;
+            background: #000;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,212,255,0.3);
+        }
+
+        .shorts-wrapper {
+            position: relative;
+            padding-bottom: 177.77%;
+            height: 0;
+        }
+
+        .shorts-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .btn-whatsapp-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 15px 35px;
+            background: transparent;
+            color: #25d366;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 1.1em;
+            font-weight: bold;
+            border: 2px solid #25d366;
+            transition: all 0.3s ease;
+            margin-top: 25px;
+        }
+
+        .btn-whatsapp-secondary:hover {
+            background: #25d366;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .gallery-section {
+            padding: 60px 20px;
+            background: rgba(0,0,0,0.9);
+            position: relative;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2em;
+            margin-bottom: 40px;
+            color: #00d4ff;
+        }
+
+        .image-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 25px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        @media (min-width: 768px) {
+            .image-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .hero h1 { font-size: 3.5em; }
+        }
+
+        @media (min-width: 1024px) {
+            .image-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .hero h1 { font-size: 4em; }
+        }
+
+        .image-card {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .image-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 60px rgba(0,212,255,0.2);
+        }
+
+        .image-card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .image-card .overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+            padding: 25px;
+        }
+
+        .image-card h3 {
+            color: #00d4ff;
+            margin-bottom: 8px;
+            font-size: 1.3em;
+        }
+
+        .videos-section {
+            padding: 60px 20px;
+            background: rgba(0,0,0,0.8);
+            position: relative;
+        }
+
+        .video-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 25px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        @media (min-width: 768px) {
+            .video-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .video-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .video-card {
+            background: rgba(255,255,255,0.05);
+            border-radius: 20px;
+            padding: 15px;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .video-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 20px 40px rgba(123,44,191,0.3);
+        }
+
+        .video-card iframe {
+            width: 100%;
+            height: 200px;
+            border-radius: 15px;
+            border: none;
+        }
+
+        .video-card h3 {
+            margin-top: 15px;
+            color: #00d4ff;
+            font-size: 1.2em;
+        }
+
+        .video-card p {
+            color: #b8b8b8;
+            margin-top: 8px;
+            font-size: 0.95em;
+        }
+
+        .offer-section {
+            padding: 80px 20px;
+            background: linear-gradient(135deg, rgba(255,215,0,0.1) 0%, rgba(255,140,0,0.1) 100%);
+            text-align: center;
+            position: relative;
+            border-top: 1px solid rgba(255,215,0,0.3);
+            border-bottom: 1px solid rgba(255,215,0,0.3);
+        }
+
+        .offer-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .offer-section h2 {
+            font-size: 2.2em;
+            margin-bottom: 20px;
+            color: #ffd700;
+            text-shadow: 0 0 20px rgba(255,215,0,0.3);
+        }
+
+        .offer-price {
+            font-size: 3.5em;
+            color: #fff;
+            margin: 20px 0;
+            font-weight: bold;
+        }
+
+        .offer-price span {
+            font-size: 0.4em;
+            color: #888;
+            text-decoration: line-through;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .offer-features {
+            text-align: left;
+            max-width: 400px;
+            margin: 30px auto;
+            color: #e0e0e0;
+        }
+
+        .offer-features li {
+            list-style: none;
+            padding: 10px 0;
+            padding-left: 30px;
+            position: relative;
+        }
+
+        .offer-features li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #ffd700;
+            font-weight: bold;
+        }
+
+        .btn-pago-main {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 20px 50px;
+            background: linear-gradient(45deg, #ffd700, #ff8c00);
+            color: #000;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 1.3em;
+            font-weight: bold;
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.4);
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .btn-pago-main:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 20px 40px rgba(255, 215, 0, 0.6);
+        }
+
+        .guarantee {
+            margin-top: 20px;
+            color: #888;
+            font-size: 0.9em;
+        }
+
+        .broker-section {
+            padding: 60px 20px;
+            background: rgba(0,0,0,0.9);
+            text-align: center;
+            position: relative;
+        }
+
+        .broker-card {
+            display: inline-block;
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            padding: 30px 25px;
+            border-radius: 20px;
+            margin: 10px;
+            transition: all 0.3s ease;
+            max-width: 90%;
+        }
+
+        .broker-card:hover {
+            transform: scale(1.05);
+        }
+
+        .broker-card h3 {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+
+        .footer-cta {
+            padding: 60px 20px;
+            text-align: center;
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 100%);
+            position: relative;
+        }
+
+        .footer-cta h2 {
+            font-size: 1.8em;
+            margin-bottom: 20px;
+        }
+
+        .footer-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+
+        .btn-footer-whatsapp {
+            padding: 12px 30px;
+            background: transparent;
+            color: #25d366;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 1em;
+            border: 2px solid #25d366;
+            transition: all 0.3s ease;
+        }
+
+        .btn-footer-whatsapp:hover {
+            background: #25d366;
+            color: white;
+        }
+
+        .btn-footer-pago {
+            padding: 12px 30px;
+            background: linear-gradient(45deg, #ffd700, #ff8c00);
+            color: #000;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 1em;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .btn-footer-pago:hover {
+            transform: scale(1.05);
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <div class="hero-background"></div>
+    <div class="hero-overlay"></div>
+
+    <div class="bg-animation">
+        <span style="left:10%;animation-delay:0s"></span>
+        <span style="left:20%;animation-delay:2s"></span>
+        <span style="left:30%;animation-delay:4s"></span>
+        <span style="left:40%;animation-delay:0s"></span>
+        <span style="left:50%;animation-delay:2s"></span>
+        <span style="left:60%;animation-delay:4s"></span>
+        <span style="left:70%;animation-delay:0s"></span>
+        <span style="left:80%;animation-delay:2s"></span>
+        <span style="left:90%;animation-delay:4s"></span>
+    </div>
+
+    <header>
+        <div class="logo">Carlos Zavala Trading</div>
+    </header>
+
+    <section class="hero">
+        <h1>Domina las Opciones Binarias</h1>
+        <p>Aprende a operar con estrategias probadas en Pocket Option y otros brókers. Resultados reales, mentoría personalizada con Carlos Zavala.</p>
+        
+        <a href="https://wa.me/584242256305" class="btn-whatsapp-main fade-in" target="_blank">
+            💬 Hablemos por WhatsApp
+        </a>
+        
+        <p class="hero-subtext fade-in">Te respondo en menos de 10 minutos</p>
+    </section>
+
+    <section class="presentation-section">
+        <div class="presentation-container fade-in">
+            <h2>🎥 Conóceme</h2>
+            <p style="margin-bottom: 25px; color: #b8b8b8; font-size: 1.1em;">Mira mi mensaje y descubre cómo puedo ayudarte</p>
+            
+            <div class="shorts-container">
+                <div class="shorts-wrapper">
+                    <iframe src="https://www.youtube.com/embed/80TrEkWNMG8" 
+                        title="Presentación Carlos Zavala" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                        allowfullscreen>
+                    </iframe>
+                </div>
+            </div>
+            
+            <a href="https://wa.me/584242256305" class="btn-whatsapp-secondary fade-in" target="_blank">
+                📱 ¿Tienes dudas? Escríbeme
+            </a>
+        </div>
+    </section>
+
+    <section class="gallery-section">
+        <h2 class="section-title fade-in">Resultados y Estrategias</h2>
+        <div class="image-grid">
+            
+            <div class="image-card fade-in">
+                <img src="https://images.unsplash.com/photo-1611974765270-ca1258634369?w=400&h=250&fit=crop" alt="Análisis técnico avanzado">
+                <div class="overlay">
+                    <h3>Estrategia de Tendencia</h3>
+                    <p>Análisis técnico avanzado</p>
+                </div>
+            </div>
+
+            <div class="image-card fade-in">
+                <img src="https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?w=400&h=250&fit=crop" alt="Gráficos de velas japonesas">
+                <div class="overlay">
+                    <h3>Patrones de Velas</h3>
+                    <p>Lectura profesional del mercado</p>
+                </div>
+            </div>
+
+            <div class="image-card fade-in">
+                <img src="https://images.unsplash.com/photo-1642790106117-e829e14a795f?w=400&h=250&fit=crop" alt="Trading desde laptop">
+                <div class="overlay">
+                    <h3>Trading Móvil</h3>
+                    <p>Opera desde cualquier lugar</p>
+                </div>
+            </div>
+
+            <div class="image-card fade-in">
+                <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=250&fit=crop" alt="Setup profesional de trading">
+                <div class="overlay">
+                    <h3>Setup Profesional</h3>
+                    <p>Equipamiento de trader experto</p>
+                </div>
+            </div>
+
+            <div class="image-card fade-in">
+                <img src="https://images.unsplash.com/photo-1518546305927-5a555bb7020d?w=400&h=250&fit=crop" alt="Trading de criptomonedas">
+                <div class="overlay">
+                    <h3>Crypto Trading</h3>
+                    <p>Bitcoin y altcoins</p>
+                </div>
+            </div>
+
+            <div class="image-card fade-in">
+                <img src="https://images.unsplash.com/photo-1611974765271-ca1258634369?w=400&h=250&fit=crop" alt="Tendencia alcista">
+                <div class="overlay">
+                    <h3>Tendencias Alcistas</h3>
+                    <p>Identifica oportunidades</p>
+                </div>
+            </div>
+
+            <div class="image-card fade-in">
+                <img src="https://images.unsplash.com/photo-1565514020176-db590232df6a?w=400&h=250&fit=crop" alt="Resultados financieros">
+                <div class="overlay">
+                    <h3>Resultados Reales</h3>
+                    <p>Ganancias verificadas</p>
+                </div>
+            </div>
+
+            <div class="image-card fade-in">
+                <img src="https://images.unsplash.com/photo-1591696205602-929ff9a6d205?w=400&h=250&fit=crop" alt="Trader profesional">
+                <div class="overlay">
+                    <h3>Disciplina Trader</h3>
+                    <p>Mentalidad ganadora</p>
+                </div>
+            </div>
+
+            <div class="image-card fade-in">
+                <img src="https://images.unsplash.com/photo-1642543492481-44e81e3914a7?w=400&h=250&fit=crop" alt="Indicadores técnicos">
+                <div class="overlay">
+                    <h3>Indicadores PRO</h3>
+                    <p>Herramientas institucionales</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="videos-section">
+        <h2 class="section-title fade-in">Videos Educativos</h2>
+        <div class="video-grid">
+            
+            <div class="video-card fade-in">
+                <iframe src="https://www.youtube.com/embed/4hDHaJZd2C8" title="Qué son las opciones binarias" allowfullscreen></iframe>
+                <h3>¿Qué son las Opciones Binarias?</h3>
+                <p>Conceptos básicos explicados paso a paso</p>
+            </div>
+
+            <div class="video-card fade-in">
+                <iframe src="https://www.youtube.com/embed/1k8o8-3B4Qg" title="Estrategia para principiantes" allowfullscreen></iframe>
+                <h3>Estrategia para Principiantes</h3>
+                <p>Tu primera operación rentable</p>
+            </div>
+
+            <div class="video-card fade-in">
+                <iframe src="https://www.youtube.com/embed/eynxyoKgpng" title="Análisis técnico básico" allowfullscreen></iframe>
+                <h3>Análisis Técnico Básico</h3>
+                <p>Lee el mercado como un experto</p>
+            </div>
+
+            <div class="video-card fade-in">
+                <iframe src="https://www.youtube.com/embed/4Zoc9S7g5iw" title="Gestión de capital" allowfullscreen></iframe>
+                <h3>Gestión de Capital</h3>
+                <p>Protege tu inversión siempre</p>
+            </div>
+
+            <div class="video-card fade-in">
+                <iframe src="https://www.youtube.com/embed/2c7Ug8G6yF8" title="Trading en tiempo real" allowfullscreen></iframe>
+                <h3>Trading en Tiempo Real</h3>
+                <p>Operaciones en vivo demostradas</p>
+            </div>
+
+            <div class="video-card fade-in">
+                <iframe src="https://www.youtube.com/embed/JHv4PMU4g-g" title="Patrones de velas japonesas" allowfullscreen></iframe>
+                <h3>Patrones de Velas</h3>
+                <p>Señales de entrada precisas</p>
+            </div>
+
+            <div class="video-card fade-in">
+                <iframe src="https://www.youtube.com/embed/9Uq3Db3lP6k" title="Mentalidad de trader" allowfullscreen></iframe>
+                <h3>Psicología del Trading</h3>
+                <p>Control emocional para ganar</p>
+            </div>
+
+            <div class="video-card fade-in">
+                <iframe src="https://www.youtube.com/embed/9fZ4T5V0F2k" title="Mejores indicadores" allowfullscreen></iframe>
+                <h3>Mejores Indicadores</h3>
+                <p>Herramientas que funcionan</p>
+            </div>
+
+            <div class="video-card fade-in">
+                <iframe src="https://www.youtube.com/embed/3hP8f8g8g8g" title="Estrategia profesional" allowfullscreen></iframe>
+                <h3>Estrategia Avanzada</h3>
+                <p>Método profesional completo</p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- PRECIO ACTUALIZADO A $35 USD -->
+    <section class="offer-section">
+        <div class="offer-container fade-in">
+            <h2>🚀 ¿Listo para empezar?</h2>
+            <p style="color: #b8b8b8; margin-bottom: 20px;">Accede a todo mi conocimiento y mentoría personalizada</p>
+            
+            <div class="offer-price">
+                <span>$97 USD</span>
+                $35 USD
+            </div>
+            
+            <ul class="offer-features">
+                <li>Acceso completo al curso de opciones binarias</li>
+                <li>Mentoría personalizada con Carlos Zavala</li>
+                <li>Señales de trading en tiempo real</li>
+                <li>Grupo privado de Telegram</li>
+                <li>Estrategias actualizadas mensualmente</li>
+                <li>Soporte 24/7 por WhatsApp</li>
+            </ul>
+            
+            <a href="https://app.komvii.com/checkout/ayu2TTrzDJhCTtFxn6FkyfEdQ2a4cVE3" class="btn-pago-main fade-in" target="_blank">
+                💳 Sí, quiero acceder ahora
+            </a>
+            
+            <p class="guarantee">🛡️ Garantía de 7 días. Si no te gusta, te devuelvo tu dinero.</p>
+        </div>
+    </section>
+
+    <section class="broker-section">
+        <h2 class="section-title fade-in">Bróker Recomendado</h2>
+        <div class="broker-card fade-in">
+            <h3>🏆 Pocket Option</h3>
+            <p>El mejor bróker para opciones binarias</p>
+            <a href="https://pocketoption.com" class="btn-footer-pago" style="display: inline-block; margin-top: 15px;" target="_blank">Registrarse Gratis</a>
+        </div>
+    </section>
+
+    <section class="footer-cta">
+        <h2 class="fade-in">¿Aún tienes dudas?</h2>
+        <p class="fade-in" style="color: #888; margin-bottom: 10px;">
+            Estoy aquí para ayudarte a tomar la mejor decisión
+        </p>
+        
+        <div class="footer-buttons fade-in">
+            <a href="https://wa.me/584242256305" class="btn-footer-whatsapp" target="_blank">
+                💬 WhatsApp
+            </a>
+            <a href="https://app.komvii.com/checkout/ayu2TTrzDJhCTtFxn6FkyfEdQ2a4cVE3" class="btn-footer-pago" target="_blank">
+                🚀 Comprar Curso
+            </a>
+        </div>
+        
+        <p style="margin-top: 40px; color: #666; font-size: 0.9em;">
+            © 2024 Carlos Zavala Trading. Todos los derechos reservados.
+        </p>
+    </section>
+
+    <script>
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: "0px 0px -50px 0px"
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach((el) => observer.observe(el));
+    </script>
+</body>
+</html>
